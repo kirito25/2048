@@ -3,4 +3,4 @@
 
 A bit modified.
 
-Try it out at (here)[https://kirito25.github.io/2048/]
+Try it out at [here](https://kirito25.github.io/2048/)
