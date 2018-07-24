@@ -1,8 +1,8 @@
 class Tile {
-  constructor(x, y) {
-    this.x = x;
-    this.y = y;
-    this.position = createVector(x * tile_size + tile_width, y * tile_size + tile_height);
+  constructor(i, j) {
+    this.x = j;
+    this.y = i;
+    this.position = createVector(this.x * tile_size + tile_width, this.y * tile_size + tile_height);
     this.value = 0;
     this.drawEmpty();
   }
@@ -32,7 +32,6 @@ class Tile {
   setValue(value) {
     this.value = value;
     this.draw();
-
   }
   
   init() {
@@ -53,12 +52,26 @@ class Tile {
   }
   
   canMerge(tile) {
-    return ( (this.value == tile.value) || this.isEmpty() || tile.isEmpty() );
+    return ( (this.value == tile.value) && !this.merged && !tile.merged );
   }
   
   merge(tile) {
+    if (!this.isEmpty() && !tile.isEmpty()) {
+      this.merged = true;
+    }
     this.value = this.value + tile.value;
     tile.setEmpty();
+  }
+  
+  moveLeft(i, j) {
+    var x = j;
+    var y = i;
+    var position = createVector(x * tile_size + tile_width, y * tile_size + tile_height);
+    var speed = createVector(1, 0);
+    while (this.position.x < position.x) {
+      this.position = this.position + speed;
+      this.draw();
+    }
   }
   
 }
