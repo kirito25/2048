@@ -12,7 +12,7 @@ function setup() {
   var canvas = createCanvas(720, 720);
   stroke(10);
   game = new Game(4,4);
-  frameRate(60);
+  frameRate(30);
 }
 
 function draw() {
