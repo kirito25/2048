@@ -2,6 +2,7 @@ var tile_width = 100;
 var tile_height = 100;
 var tile_size = 100;
 var tile_spacing = 10;
+var speed = 5;
 var k = 0;
 var chances_two = 0.9;
 var chances_four = 0.1;
@@ -15,6 +16,7 @@ function setup() {
 }
 
 function draw() {
+  background(255);
   game.draw();
 
 }
