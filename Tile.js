@@ -17,27 +17,41 @@ function tileVector(i, j) {
 
 class Tile {
   constructor(i, j) {
+    this.tempTile = null;
     this.moving = false;
+    this.merged = false;
     this.position = tileVector(i, j);
     this.value = 0;
+    this.newValue = 0;
     this.speed = createVector(0, 0, 0);
     this.newposition = this.position.copy();
     this.textColor = 'white';
     this.background = 'rgb(124,181,226)';
   }
   
-  setValue(value)  { this.value = value; }
-  setEmpty()       { this.value = 0; }
+  setValue(value)  { this.value = value; this.newValue = value;}
   isEmpty()        { return this.value == 0; }
-  isMoving()       { return this.moving; }
+  isMoving() {
+    if (this.tempTile != null) {
+      return !this.speed.equals(0,0,0) || this.tempTile.isMoving();
+    }
+    else {
+      return !this.speed.equals(0,0,0);
+    }
+  }
   
   draw() {
     push();
     if (!(this.position.equals(this.newposition))) {
-      this.moving = true;
       this.position.add(this.speed);
     }
-    else { this.moving = false; }
+    else { 
+      this.value = this.newValue;
+      this.tempTile = null;
+      this.merged = false;
+      this.speed.set(0,0,0);
+    }
+    if (this.tempTile != null) { this.tempTile.draw(); }
     fill(this.background);
     rect(this.position.x, this.position.y, tile_size - tile_spacing , tile_size - tile_spacing, 10);
     textSize(32);
@@ -57,33 +71,28 @@ class Tile {
   }
   
   merge(tile) {
-    this.value = this.value + tile.value;
+    this.tempTile = tile;
+    tile.merged = true;
+    this.merged = true;
+    this.newValue = this.value + tile.value;
   }
   
   moveLeft(i, j) {
-    var x = j;
-    var y = i;
     this.newposition = tileVector(i, j);
     this.speed.set(speed * -1, 0, 0);
   }
   
   moveRight(i, j) {
-    var x = j;
-    var y = i;
     this.newposition = tileVector(i, j);
     this.speed.set(speed, 0, 0);
   }
   
   moveUp(i, j) {
-    var x = j;
-    var y = i;
     this.newposition = tileVector(i, j);
     this.speed.set(0, speed * -1 , 0);
   }
   
   moveDown(i, j) {
-    var x = j;
-    var y = i;
     this.newposition = tileVector(i, j);
     this.speed.set(0, speed, 0);
   }
