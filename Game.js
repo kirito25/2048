@@ -38,10 +38,12 @@ class Game {
   
   moveUp() {
     if (this.isMoving()) { return; }
+    var k = 0;
     for (var z = 0; z < this.n; z++) { 
       for (var i = 0; i < this.n; i++) {
         for (var j = 0; j < this.m; j++) {
-          for (var k = i - 1; k >= 0; k--) {
+          k = i - 1;
+          if (k >= 0) {
             // the tile above is empty and we are tile
             if (this.tiles[k][j] == 0 && this.tiles[i][j] != 0) {
               this.tiles[i][j].moveUp(k, j);
@@ -63,10 +65,12 @@ class Game {
   
   moveDown() {
     if (this.isMoving()) { return; }
+    var k = 0;
     for (var z = 0; z < this.n; z++) { 
       for (var i = this.n - 1; i >= 0; i--) {
         for (var j = 0; j < this.m; j++) {
-          for (var k = i + 1; k < this.n; k++) {
+          k = i + 1;
+          if (k < this.n) {
             // the tile below is empty and we are tile
             if (this.tiles[k][j] == 0 && this.tiles[i][j] != 0) {
               this.tiles[i][j].moveDown(k, j);
@@ -91,7 +95,8 @@ class Game {
     for (var z = 0; z < this.m; z++) {
       for (var i = 0; i < this.n; i++) {
         for (var j = 0; j < this.m; j++) {
-          for (var k = j - 1; k >= 0; k--) {
+          var k = j - 1;
+          if (k >= 0) {
             // the tile to the left is empty and we are a tile
             if (this.tiles[i][k] == 0 && this.tiles[i][j] != 0) {
               this.tiles[i][j].moveLeft(i, k);
@@ -113,11 +118,12 @@ class Game {
   
   moveRight() {
     if (this.isMoving()) { return; }
+    var k = 0;
     for (var z = 0; z < this.m; z++) {
       for (var i = 0; i < this.n; i++) {
         for (var j = this.m - 1; j >= 0; j--) {
-          
-          for (var k = j + 1; k < this.m; k++) {
+          k = j + 1;
+          if(k < this.m) {
             // the tile to the right is empty and we are tile
             if (this.tiles[i][k] == 0 && this.tiles[i][j] != 0) {
               this.tiles[i][j].moveRight(i, k);
@@ -132,7 +138,6 @@ class Game {
               }
             }
           }
-          
         }
       }
     }
